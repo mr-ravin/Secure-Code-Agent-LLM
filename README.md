@@ -1,4 +1,4 @@
-# Secure Code Agent 🤖
+# Secure Code Agent 🤖 [Work in Progress]
 
 ## Overview
 Secure Code Agent is a **LangChain-powered** LLM based automated code review and refactoring tool that:
