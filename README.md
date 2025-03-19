@@ -94,7 +94,8 @@ python main.py --path <repo_path> [--receiver_email <recipient>]
 
 ### Arguments
 - `--path <repo_path>`: **(Required)** Path to the repository to analyze
-- `--branch_name`: **(Optional)** GitHub branch where AI agent will push the code (in the same repository).
+- `--repo_url`: **(Optional)** GitHub repository URL, After `git clone` it will get stored at --path location
+- `--branch_name`: **(Optional)** GitHub branch where AI agent will push the code (in the same repository)
 - `--do_send_email`: **(Optional)** Send an email report when set `true`
 - `--receiver_email <recipient>`: **(Optional)** Email recipient for the report (required if `--do_send_email` is `true`)
 
