@@ -89,7 +89,7 @@ ollama serve &
 Run the agent with the following command:
 
 ```bash
-python main.py --path <repo_path> [--send-email] [--email <recipient>]
+python main.py --path <repo_path> [--receiver_email <recipient>]
 ```
 
 ### Arguments
