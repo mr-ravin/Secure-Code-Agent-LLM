@@ -25,7 +25,7 @@ Secure Code Agent is a **LangChain-powered** LLM based automated code review and
 ## File Structure
 ```
 │──secure_code_agent/
-|      │── config.py               # Configurations (GitHub, email, etc.)
+|      │── config.sh               # Configurations and Credentials (GitHub, Email, etc.)
 |      │── security_check.py       # Security vulnerability detection (uses CodeBERT-Base)
 |      │── refactor.py             # Context-aware code refactoring (uses Gemma3:1B)
 |      │── github_manager.py       # GitHub authentication & PR creation
@@ -38,12 +38,12 @@ Secure Code Agent is a **LangChain-powered** LLM based automated code review and
 ```
 
 ## Supported Languages for Code review and Security Analysis
-✅ Python (`.py`)  
-✅ JavaScript (`.js`)  
-✅ TypeScript (`.ts`)  
-✅ Java (`.java`)  
-✅ C (`.c`)  
-✅ C++ (`.cpp`)  
+✅ Python (`.py`)
+✅ JavaScript (`.js`)
+✅ TypeScript (`.ts`)
+✅ Java (`.java`)
+✅ C (`.c`)
+✅ C++ (`.cpp`)
 
 ## Security Analysis
 The agent detects:
@@ -94,12 +94,12 @@ python main.py --path <repo_path> [--send-email] [--email <recipient>]
 
 ### Arguments
 - `--path <repo_path>`: **(Required)** Path to the repository to analyze
-- `--send-email`: **(Optional)** Send an email report when set `true`
-- `--email <recipient>`: **(Optional)** Email recipient for the report (required if `--send-email` is `true`)
+- `--do_send_email`: **(Optional)** Send an email report when set `true`
+- `--receiver_email <recipient>`: **(Optional)** Email recipient for the report (required if `--do_send_email` is `true`)
 
 ### Example
 ```bash
-python main.py --path /path/to/repo --send-email --email user@example.com
+python main.py --path /path/to/repo --receiver_email user@example.com
 ```
 
 ## License

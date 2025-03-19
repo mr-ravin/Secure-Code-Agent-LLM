@@ -15,11 +15,11 @@ def main():
     parser = argparse.ArgumentParser(description="Secure Code Agent")
     parser.add_argument("--path", required=True, help="Path to the repository")
     parser.add_argument("--branch_name", default="securedev_agent_fixes", help="Branch where AI agent will push the code")
-    parser.add_argument("--send-email", action="store_true", help="Send email report if set")
-    parser.add_argument("--email", help="Recipient email (required if --send-email is set)")
+    parser.add_argument("--do_send_email", default="true", help="Send email report if set")
+    parser.add_argument("--receiver_email", default="", help="Recipient email (required if --do_send_email is set)")
     args = parser.parse_args()
 
-    if args.send_email and not args.email:
+    if args.do_send_email.lower() == "true" and len(args.receiver_email)==0:
         logging.error("Error: --email argument is required when --send-email is set")
         return
 
@@ -41,9 +41,9 @@ def main():
     github_manager = GitHubManager(repo_path, branch_name)
     pr_link = github_manager.create_pr(refactored_files)
     
-    if args.send_email:
+    if args.do_send_email.lower() == "true":
         reporter = EmailReporter()
-        reporter.send_report(args.email, findings, pr_link)
+        reporter.send_report(args.receiver_email, findings, pr_link)
     
     logging.info("Process completed successfully.")
 
