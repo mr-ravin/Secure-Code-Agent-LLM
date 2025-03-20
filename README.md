@@ -3,18 +3,28 @@
 ## Overview
 Secure Code Tool is a **LangChain-powered** LLM based automated code review and refactoring tool that:
 
-✅ Scans for **security vulnerabilities** in source code files  
-✅ Supports **Python, JavaScript, TypeScript, Java, C, and C++**  
+✅ Scans for **security vulnerabilities** in source code files
+
+✅ Supports **Python, JavaScript, TypeScript, Java, C, and C++** (Depends on which LLM one is using)
+
 ✅ Refactors code to improve quality and maintainability based on detected security issues
+
 ✅ Creates a **new GitHub branch and pull request (PR)** with improvements  
+
 ✅ **Optionally sends an email report** with findings and PR link  
 
 ## Features
-- **Security Analysis**: Detects hardcoded credentials, weak cryptography, and insecure patterns using **Microsoft CodeBERT-Base**
-- **Context-Aware Code Refactoring**: Improves structure, readability, and performance, fixing security vulnerabilities using **gemma3:1b"**
-- **GitHub Integration**: Creates a new branch and submits a PR
-- **Email Report**: Sends findings and PR details (if enabled)
-- **Command-Line Interface**: Simple and easy to use
+- **Security Analysis**: Detects hardcoded credentials, weak cryptography, and insecure patterns.
+- **Context-Aware Code Refactoring**: Improves structure, readability, and performance while fixing security vulnerabilities using Gemma3:1b.
+- **AI-Powered Code Suggestions**: Uses CodeGemma:2b for intelligent security fixes and best-practice improvements.
+- **GitHub Integration**: Automatically creates a new branch and submits a PR with fixes.
+- **Email Report**: Sends findings and PR details (if enabled).
+- **Command-Line Interface**: Simple and easy to use.
+- **Multi-Language Support**: Supports Python, JavaScript, TypeScript, Java, C, and C++.
+- **Configurable Rules**: Custom regex patterns for detecting secrets and insecure practices.
+- **Logging & Auditing**: Generates logs for audit trails and compliance tracking.
+- **Auto-Commit & Push**: Automatically commits refactored code and security fixes before PR creation.
+- **Extensibility**: Easy to add new security rules and language support.
 
 ---
 ## 🔧 **Development Details**
@@ -24,7 +34,9 @@ Secure Code Tool is a **LangChain-powered** LLM based automated code review and 
 ---
 #### Important: 
 
-We have inferenced Secure-Code-Tool-LLM on a 6GB CPU device. Thus, used `gemma3:1b` with `Ollama` (Everything running locally! Thanks to Ollama). In case one have better hardware resources available, can try with more powerful LLMs available on `Ollama` like: `gemma3:4b`, `gemma3:12b`, `gemma3:27b`, `llama3:8b`, `llama3:70b`, `mistral-small:24b`, `mistral:7b` etc. Or, 
+We have inferenced Secure-Code-Tool-LLM on a 6GB CPU device. Thus, we have used `gemma3:1b` with `Ollama` (Everything running locally! Thanks to Ollama). 
+
+In case one have better hardware resources available, can try with more powerful LLMs available on `Ollama` like: `gemma3:4b`, `gemma3:12b`, `gemma3:27b`, `llama3:8b`, `llama3:70b`, `mistral-small:24b`, `mistral:7b` etc. A model can be easily changed with `--ollama_model` flag in `main.py` once it is pulled on Ollama Server `ollama pull < model name:<version> >`. Or, 
 
 Use any other LLM library (but, might need API Access) and some changes in `main.py` file based on prompt template and API.
 
