@@ -1,4 +1,4 @@
-# Secure Code Tool - LLM 🤖 [Work in Progress]
+# Secure Code Tool - LLM 🤖
 
 ## Overview
 Secure Code Tool is a **LangChain-powered** LLM based automated code review and refactoring tool that:
