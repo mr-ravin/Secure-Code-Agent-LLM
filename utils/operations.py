@@ -1,6 +1,34 @@
+import re
 import os
+import json
 import logging
 import subprocess
+
+def llm_output_json(response):
+    """
+    Parses the LLM response and returns a valid JSON object.
+    
+    - If response is a string, attempts to clean and parse JSON.
+    - If response is already a dictionary, returns it directly.
+    - Logs errors and returns None if parsing fails.
+    """
+    if isinstance(response, dict):
+        return response  # Already a dictionary, return as is
+
+    if isinstance(response, str):
+        # Remove Markdown-style code blocks if present
+        response_cleaned = re.sub(r'```json|```', '', response).strip()
+        
+        try:
+            return json.loads(response_cleaned)  # Attempt JSON parsing
+        except json.JSONDecodeError as e:
+            logging.error(f"JSON parsing failed: {e}")
+            logging.debug(f"Raw Response: {response}")
+            return None
+
+    # Unexpected response type
+    logging.error(f"Unexpected response type: {type(response)}")
+    return None
 
 def checkout_branch(repo_path, branch_name):
     try:

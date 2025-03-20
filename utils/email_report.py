@@ -9,9 +9,9 @@ class EmailReporter:
             if os.getenv("EMAIL_SENDER") is None:
                 logging.error(f"Failed to fetch email address from environment variables.")
                 return
-            content = f"Security scan completed.\nFindings: {findings}\nPull Request: {pr_link}"
+            content = f"Security scan completed.\n\nFindings:\n{findings}\n\nPull Request:\n {pr_link}"
             msg = MIMEText(content)
-            msg["Subject"] = "Secure Code Agent Report"
+            msg["Subject"] = "Secure Code Tool Report"
             msg["From"] = os.getenv("EMAIL_SENDER")
             msg["To"] = recipient_email
             logging.info("Initiating email sending.")

@@ -6,7 +6,7 @@ class GitHubManager:
     def __init__(self, repo_url, repo_path, branch_name, target_pr_branch):
         self.repo = Repo(repo_path)
         self.branch_name = branch_name
-        self.repo_url = repo_url
+        self.repo_url = repo_url.rstrip(".git")
         self.remote_name = "origin"
         self.target_pr_branch = target_pr_branch
         self.github_token = os.getenv("GITHUB_TOKEN")  # Fetch token from environment
@@ -57,16 +57,3 @@ class GitHubManager:
         except Exception as e:
             logging.error(f"Unexpected error: {e}")
             return "GitHub operation failed"
-
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
-
-    repo_url = "https://github.com/mr-ravin/sample_code_review_check.git"
-    repo_path = "/home/sparrow/Desktop/test_repo/"
-    branch_name = "secure_code_agent_fixes"
-    target_pr_branch = "main"
-    
-    github_manager = GitHubManager(repo_url, repo_path, branch_name, target_pr_branch)
-    pr_link = github_manager.create_pr({'/home/sparrow/Desktop/test_repo/ravdec.py': 'print("Unit Testing: GitHub Manager")'})
-
-    print(f"Pull Request Link: {pr_link}")

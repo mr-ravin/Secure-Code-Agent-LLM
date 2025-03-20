@@ -1,11 +1,11 @@
-# Secure Code Agent 🤖 [Work in Progress]
+# Secure Code Tool - LLM 🤖 [Work in Progress]
 
 ## Overview
-Secure Code Agent is a **LangChain-powered** LLM based automated code review and refactoring tool that:
+Secure Code Tool is a **LangChain-powered** LLM based automated code review and refactoring tool that:
 
 ✅ Scans for **security vulnerabilities** in source code files  
 ✅ Supports **Python, JavaScript, TypeScript, Java, C, and C++**  
-✅ Refactors code to improve quality and maintainability based on detected security issues  
+✅ Refactors code to improve quality and maintainability based on detected security issues
 ✅ Creates a **new GitHub branch and pull request (PR)** with improvements  
 ✅ **Optionally sends an email report** with findings and PR link  
 
@@ -19,26 +19,27 @@ Secure Code Agent is a **LangChain-powered** LLM based automated code review and
 ---
 ## 🔧 **Development Details**
 - **👨‍💻 Developer:** [Ravin Kumar](https://mr-ravin.github.io)  
-- **📂 GitHub Repository:** [https://github.com/mr-ravin/Secure-Code-Agent-LLM](https://github.com/mr-ravin/Secure-Code-Agent-LLM)
+- **📂 GitHub Repository:** [https://github.com/mr-ravin/Secure-Code-Tool-LLM](https://github.com/mr-ravin/Secure-Code-Tool-LLM)
 
 #### Important: 
 
-We have inferenced Secure-Code-Agent-LLM on a 6GB CPU device. Thus, used `gemma3:1b` with `Ollama` (Everything running locally! Thanks to Ollama). In case one have better hardware resources available, can try with more powerful LLMs available on `Ollama`. Or, 
+We have inferenced Secure-Code-Tool-LLM on a 6GB CPU device. Thus, used `gemma3:1b` with `Ollama` (Everything running locally! Thanks to Ollama). In case one have better hardware resources available, can try with more powerful LLMs available on `Ollama` like: `gemma3:4b`, `gemma3:12b`, `gemma3:27b`, `llama3:8b`, `llama3:70b`, `mistral-small:24b`, `mistral:7b` etc. Or, 
 
 Use any other LLM library (but, might need API Access) and some changes in `main.py` file based on prompt template and API.
 
 ---
 ## File Structure
 ```
-│──secure_code_agent/
+|── main.py                 # Entry point
+│── requirements.txt        # Dependencies
+|
+│──utils/
 |      │── config.sh               # Configurations and Credentials (GitHub, Email, etc.)
 |      │── security_check.py       # Security vulnerability detection (uses CodeBERT-Base)
 |      │── github_manager.py       # GitHub authentication & PR creation
 |      │── email_report.py         # Email functionality
-|      │── utils.py                # Helper functions
+|      │── operations.py                # Helper functions
 |
-|── main.py                 # Entry point
-│── requirements.txt        # Dependencies
 │── README.md               # Documentation
 ```
 
@@ -51,7 +52,7 @@ Use any other LLM library (but, might need API Access) and some changes in `main
 ✅ C++ (`.cpp`)
 
 ## Security Analysis
-The agent detects:
+The tool detects:
 - Hardcoded **AWS & Google Cloud keys**
 - **GitHub secrets**
 - **SSH keys**
@@ -68,8 +69,8 @@ Ensure you have **Python 3.8+** installed. Then, clone the repository and instal
 
 ```bash
 # Clone the repository
-git clone -b main https://github.com/mr-ravin/Secure-Code-Agent-LLM.git
-cd Secure-Code-Agent-LLM
+git clone -b main https://github.com/mr-ravin/Secure-Code-Tool-LLM.git
+cd Secure-Code-Tool-LLM
 
 # Install dependencies
 pip install -r requirements.txt
@@ -94,10 +95,10 @@ ollama serve &
 - Initialise the login credentials in environment variables:
 
 ```bash
-source ./source_code_agent/config.sh 
+source ./utils/config.sh 
 ```
 
-- Run the agent with the following command:
+- Run the tool with the following command:
 
 ```bash
 python main.py --path <repo_path> [--receiver_email <recipient>]
@@ -105,11 +106,11 @@ python main.py --path <repo_path> [--receiver_email <recipient>]
 
 ### Arguments
 
-- `--path <repo_path>`: **(Required)** Local path to the code repository to be  reviewed and fixed by AI Agent
-- `--repo_url`: **(Optional)** GitHub repository URL of Code repository to be reviewed and fixed by AI Agent. After performing `git clone` this repository will get stored at the location specified in `--path`
+- `--path <repo_path>`: **(Required)** Local path to the code repository to be  reviewed and fixed by AI Tool
+- `--repo_url`: **(Optional)** GitHub repository URL of Code repository to be reviewed and fixed by AI Tool. After performing `git clone` this repository will get stored at the location specified in `--path`
 - `--repo_branch`: **(Optional)** Branch name of GitHub repository URL of the code to be reviewed and refactored. Default value is `main`
-- `--agent_branch_name`: **(Optional)** GitHub branch where AI agent will push the code (in the same repository)
-- `--pr_branch_name`: **(Optional)** GitHub branch where AI agent will raise the PR request. Default value is `main`
+- `--tool_branch_name`: **(Optional)** GitHub branch where AI tool will push the code (in the same repository)
+- `--pr_branch_name`: **(Optional)** GitHub branch where AI tool will raise the PR request. Default value is `main`
 - `--do_send_email`: **(Optional)** Send an email report when set `true`. Default value is `true`
 - `--receiver_email <recipient>`: **(Optional)** Email recipient for the report (required if `--do_send_email` is `true`)
 - `--smtp_url`: **(Optional)** Url of SMTP Server. Default value is `smtp.gmail.com`
