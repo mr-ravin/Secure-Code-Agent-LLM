@@ -21,6 +21,7 @@ Secure Code Tool is a **LangChain-powered** LLM based automated code review and 
 - **👨‍💻 Developer:** [Ravin Kumar](https://mr-ravin.github.io)  
 - **📂 GitHub Repository:** [https://github.com/mr-ravin/Secure-Code-Tool-LLM](https://github.com/mr-ravin/Secure-Code-Tool-LLM)
 
+---
 #### Important: 
 
 We have inferenced Secure-Code-Tool-LLM on a 6GB CPU device. Thus, used `gemma3:1b` with `Ollama` (Everything running locally! Thanks to Ollama). In case one have better hardware resources available, can try with more powerful LLMs available on `Ollama` like: `gemma3:4b`, `gemma3:12b`, `gemma3:27b`, `llama3:8b`, `llama3:70b`, `mistral-small:24b`, `mistral:7b` etc. Or, 
@@ -30,25 +31,31 @@ Use any other LLM library (but, might need API Access) and some changes in `main
 ---
 ## File Structure
 ```
-|── main.py                 # Entry point
-│── requirements.txt        # Dependencies
+|── main.py                        # Entry point
+│── requirements.txt               # Dependencies
 |
 │──utils/
 |      │── config.sh               # Configurations and Credentials (GitHub, Email, etc.)
 |      │── security_check.py       # Security vulnerability detection (uses CodeBERT-Base)
 |      │── github_manager.py       # GitHub authentication & PR creation
 |      │── email_report.py         # Email functionality
-|      │── operations.py                # Helper functions
+|      │── operations.py           # Helper functions
 |
-│── README.md               # Documentation
+│── README.md                      # Documentation
 ```
 
-## Supported Languages for Code review and Security Analysis
+## Supported Languages for Code review and Security Analysis (Depends on which LLM one uses)
+
 ✅ Python (`.py`)
+
 ✅ JavaScript (`.js`)
+
 ✅ TypeScript (`.ts`)
+
 ✅ Java (`.java`)
+
 ✅ C (`.c`)
+
 ✅ C++ (`.cpp`)
 
 ## Security Analysis
