@@ -6,29 +6,35 @@ class SecurityChecker:
     def __init__(self):
         self.detector = pipeline("text-classification", model="microsoft/codebert-base")
         self.sensitive_patterns = {
-            "AWS Access Key": r"(?i)aws_access_key_id[\s=:\"]+([A-Z0-9]{20})",
-            "AWS Secret Key": r"(?i)aws_secret_access_key[\s=:\"]+([A-Za-z0-9\/+=]{40})",
-            "Google Cloud Key": r"(?i)google_cloud_key[\s=:\"]+([A-Za-z0-9-_]{30,50})",
-            "S3 Bucket": r"(?i)s3_bucket[\s=:\"]+([A-Za-z0-9-_.]{3,63})",
-            "API Key": r"(?i)api_key[\s=:\"]+([A-Za-z0-9-_]{20,50})",
-            "Password": r"(?i)password[\s=:\"]+([A-Za-z0-9!@#$%^&*()_+={};:'\"<>,.?\/\\|`~-]{6,})",
-            "Weak Encryption": r"(?i)(DES|MD5|RC4|SHA1)",
-            "Lower Encryption Used": r"(?i)(AES-128|RSA-1024|3DES)"
+            "AWS Access Key Found": r"(?i)aws_access_key_id[\s=:\"]+([A-Z0-9]{20})",
+            "AWS Secret Key Found": r"(?i)aws_secret_access_key[\s=:\"]+([A-Za-z0-9\/+=]{40})",
+            "Google Cloud Key Found": r"(?i)google_cloud_key[\s=:\"]+([A-Za-z0-9-_]{30,50})",
+            "S3 Bucket Found": r"(?i)s3_bucket[\s=:\"]+([A-Za-z0-9-_.]{3,63})",
+            "API Key Found": r"(?i)api_key[\s=:\"]+([A-Za-z0-9-_]{20,50})",
+            "Password Found": r"(?i)password[\s=:\"]+([A-Za-z0-9!@#$%^&*()_+={};:'\"<>,.?\/\\|`~-]{6,})",
+            "Weak Encryption Found": r"(?i)(DES|MD5|RC4|SHA1)",
+            "Lower Encryption Found": r"(?i)(AES-128|RSA-1024|3DES)"
         }
 
     def analyze(self, file_content):
+        logging.info("Initiated: Tool - Security Scan")
         try:
+            issues = []
+            # Check for sensitive data patterns
             result = self.detector(file_content)
             classified_label = result[0]['label'] if result else "secure"
-            # Check for sensitive data patterns
-            issues = []
+            if classified_label is not None and classified_label.lower() != "secure":
+                issues.append(classified_label)
             for key, pattern in self.sensitive_patterns.items():
                 if re.search(pattern, file_content):
                     logging.warning(f"Potential {key} exposure detected!")
                     issues.append(key)
-            if issues:
-                return f"Security issues detected: {', '.join(issues)}"
-            return classified_label
+            if len(issues)>0:
+                logging.info("Success: Tool - Security Scan")
+                return f"\nIdentified Issues: {', '.join(issues)}\n"
+            else:
+                logging.info("Success: Tool - Security Scan")
+                return f"\nIdentified Issues: No issues found\n"
         except Exception as e:
             logging.error(f"Security check failed: {e}")
-            return "Error"
+            return f"Identified Issues: Security check failed"
