@@ -10,6 +10,7 @@ class SecurityChecker:
             "S3 Bucket Found": r"(?i)s3_bucket[\s=:\"]+([A-Za-z0-9-_.]{3,63})",
             "API Key Found": r"(?i)api_key[\s=:\'\"]+([A-Za-z0-9-_]{15,50})",
             "Password Found": r"(?i)password[\s=:\"]+([A-Za-z0-9!@#$%^&*()_+={};:'\"<>,.?\/\\|`~-]{5,})",
+            "SSH Private Key Found": r"-----BEGIN (RSA|DSA|EC|OPENSSH) PRIVATE KEY-----[\s\S]+?-----END (RSA|DSA|EC|OPENSSH) PRIVATE KEY-----",
             "Weak Encryption Found": r"(?i)(DES|MD5|RC4|SHA1)",
             "Lower Encryption Found": r"(?i)(AES-128|RSA-1024|3DES)"
         }
