@@ -44,6 +44,7 @@ Use any other LLM library (but, might need API Access) and some changes in `main
 │── README.md                      # Documentation
 ```
 
+---
 ## Supported Languages for Code review and Security Analysis (Depends on which LLM one uses)
 
 ✅ Python (`.py`)
@@ -58,6 +59,7 @@ Use any other LLM library (but, might need API Access) and some changes in `main
 
 ✅ C++ (`.cpp`)
 
+---
 ## Security Analysis
 The tool detects:
 - Hardcoded **AWS & Google Cloud keys**
