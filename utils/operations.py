@@ -7,25 +7,21 @@ import subprocess
 def llm_output_json(response):
     """
     Parses the LLM response and returns a valid JSON object.
-    
     - If response is a string, attempts to clean and parse JSON.
     - If response is already a dictionary, returns it directly.
     - Logs errors and returns None if parsing fails.
     """
     if isinstance(response, dict):
         return response  # Already a dictionary, return as is
-
     if isinstance(response, str):
         # Remove Markdown-style code blocks if present
         response_cleaned = re.sub(r'```json|```', '', response).strip()
-        
         try:
             return json.loads(response_cleaned)  # Attempt JSON parsing
         except json.JSONDecodeError as e:
             logging.error(f"JSON parsing failed: {e}")
             logging.debug(f"Raw Response: {response}")
             return None
-
     # Unexpected response type
     logging.error(f"Unexpected response type: {type(response)}")
     return None
@@ -37,6 +33,20 @@ def checkout_branch(repo_path, branch_name):
     except subprocess.CalledProcessError as e:
         logging.error(f"Failed to checkout branch {branch_name}: {e}")
 
+def extract_json_summary(response):
+    """Returns summary of all the commits."""
+    try:
+        return response.get("summary", "Clean Review").strip()
+    except Exception as e:
+        logging.error(f"Failed to read summary of commit messages.")
+
+def extract_json_solution(response):
+    """Extracts the commit message from the JSON response."""
+    try:
+        return response.get("security_solution", "Clean Review").strip()
+    except Exception as e:
+        logging.error(f"Failed to read commit message.")
+
 def extract_json_code(response):
     """Extracts the refactored code from the JSON response."""
     try:
@@ -45,9 +55,9 @@ def extract_json_code(response):
         logging.error(f"Failed to read refactored code.")
     
 def extract_json_issue(response):
-    """Extracts the security issues from the JSON response."""
+    """Extracts the security issue from the JSON response."""
     try:
-        return response.get("security_issues", "").strip()
+        return response.get("security_issue", "Not Present").strip()
     except Exception as e:
         logging.error(f"Failed to read security issue.")  
 
@@ -71,5 +81,5 @@ def clone_repo(repo_url, repo_path, repo_branch="main"):
         logging.info(f"Repository already exists at {repo_path}. Skipping clone.")
     else:
         logging.info(f"Cloning repository from {repo_url} to {repo_path}...")
-        repo_url = repo_url.replace("https://", f"https://{os.getenv("GITHUB_TOKEN")}@")
+        repo_url = repo_url.replace("https://", f"https://{os.getenv('GITHUB_TOKEN')}@")
         subprocess.run(["git", "clone", "-b", repo_branch, repo_url, repo_path], check=True)

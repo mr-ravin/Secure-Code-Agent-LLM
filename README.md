@@ -5,7 +5,7 @@ Secure Code Tool is a **LangChain-powered** LLM based automated code review and 
 
 ✅ Scans for **security vulnerabilities** in source code files
 
-✅ Supports **Python, JavaScript, TypeScript, Java, C, and C++** (Depends on which LLM one is using)
+✅ Supports **Python, JavaScript, TypeScript, Java, C, and C++** (Depends on which LLM one is using, we are using gemma3:12b)
 
 ✅ Refactors code to improve quality and maintainability based on detected security issues
 
@@ -15,8 +15,8 @@ Secure Code Tool is a **LangChain-powered** LLM based automated code review and 
 
 ## Features
 - **Security Analysis**: Detects hardcoded credentials, weak cryptography, and insecure patterns.
-- **Context-Aware Code Refactoring**: Improves structure, readability, and performance while fixing security vulnerabilities using Gemma3:1b.
-- **AI-Powered Code Suggestions**: Uses CodeGemma:2b for intelligent security fixes and best-practice improvements.
+- **Context-Aware Code Refactoring**: Improves structure, readability, and performance while fixing security vulnerabilities using Gemma3:12b.
+- **AI-Powered Code Suggestions**: Uses `gemma3:12b` LLM model for intelligent security fixes and best-practice improvements.
 - **GitHub Integration**: Automatically creates a new branch and submits a PR with fixes.
 - **Email Report**: Sends findings and PR details (if enabled).
 - **Command-Line Interface**: Simple and easy to use.
@@ -34,21 +34,21 @@ Secure Code Tool is a **LangChain-powered** LLM based automated code review and 
 ---
 #### Important: 
 
-We have inferenced Secure-Code-Tool-LLM on a 6GB CPU device. Thus, we have used `gemma3:1b` with `Ollama` (Everything running locally! Thanks to Ollama). 
+Secure-Code-Tool-LLM utilized approximately 12GB of GPU memory and 9GB of RAM. It's Git repository was first cloned into the Lightning.ai environment, after which the Ollama server was launched with gemma3:12b model on the GPU.
 
-In case one have better hardware resources available, can try with more powerful LLMs available on `Ollama` like: `gemma3:4b`, `gemma3:12b`, `gemma3:27b`, `llama3:8b`, `llama3:70b`, `mistral-small:24b`, `mistral:7b` etc. A model can be easily changed with `--ollama_model` flag in `main.py` once it is pulled on Ollama Server `ollama pull < model name:<version> >`. Or, 
+In case one have better hardware resources available, can try with more powerful LLMs available on `Ollama` like: `gemma3:27b`, `llama3:8b`, `llama3:70b`, `mistral` etc. A model can be easily changed with `--ollama_model` flag in `main.py` once it is pulled on Ollama Server `ollama pull < model name:<version> >`. Or, 
 
 Use any other LLM library (but, might need API Access) and some changes in `main.py` file based on prompt template and API.
 
 ---
 ## File Structure
 ```
-|── main.py                        # Entry point
+|── main.py                        # Entry point (LLM)
 │── requirements.txt               # Dependencies
 |
 │──utils/
 |      │── config.sh               # Configurations and Credentials (GitHub, Email, etc.)
-|      │── security_check.py       # Security vulnerability detection (uses CodeBERT-Base)
+|      │── security_check.py       # Security vulnerability detection (rule-based)
 |      │── github_manager.py       # GitHub authentication & PR creation
 |      │── email_report.py         # Email functionality
 |      │── operations.py           # Helper functions
@@ -81,7 +81,7 @@ The tool detects:
 
 ## Security-Aware Refactoring
 - **Fixes detected vulnerabilities** in the code automatically
-- **Uses insights from CodeBERT** to guide Gemma3:1B for smart fixes
+- **Uses insights from SecurityChecker** to guide gemma3:12b for smart fixes
 - **Enhances code maintainability** while keeping it secure
 
 ---
@@ -104,7 +104,7 @@ curl -fsSL https://ollama.com/install.sh | sh
 ```
 - Ensure the LLM is present inside the Ollama Server:
 ```sh
-ollama pull gemma3:1b
+ollama pull gemma3:12b
 ```
 
 ```sh
@@ -122,7 +122,7 @@ source ./utils/config.sh
 - Run the tool with the following command:
 
 ```bash
-python main.py --path <repo_path> [--receiver_email <recipient>]
+python main.py --path < LocalPath > --repo_url < RepoOfCodeToBeReviewed.git >  --receiver_email < RecipientEmail >
 ```
 
 ### Arguments
@@ -136,13 +136,17 @@ python main.py --path <repo_path> [--receiver_email <recipient>]
 - `--receiver_email <recipient>`: **(Optional)** Email recipient for the report (required if `--do_send_email` is `true`)
 - `--smtp_url`: **(Optional)** Url of SMTP Server. Default value is `smtp.gmail.com`
 - `--smtp_port`: **(Optional)** Port number of SMTP Server. Default value is `587`
-- `--ollama_model`: **(Optional)** LLM to be used from Ollama Server. Default is `gemma3:1b`
+- `--ollama_model`: **(Optional)** LLM to be used from Ollama Server. Default is `gemma3:12b`
 - `--ollama_ip`: **(Optional)** Url of Ollama Server. Default value is `localhost`
 - `--ollama_port`: **(Optional)** Port number of Ollama Server. Default value is `11434`
 
 ### Example
 ```bash
 python main.py --path /path/to/repo --receiver_email user@example.com
+```
+Or,
+```bash
+python main.py --path /teamspace/studios/this_studio/test/ --repo_url https://github.com/mr-ravin/code_testing.git --do_send_email true --receiver_email < UseReceiverEmail@website.com > --ollama_model gemma3:12b
 ```
 
 ## License

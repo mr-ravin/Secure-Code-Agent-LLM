@@ -4,14 +4,14 @@ from email.mime.text import MIMEText
 import os
 
 class EmailReporter:
-    def send_report(self, recipient_email, findings, pr_link, smtp_url, smtp_port):
+    def send_report(self, recipient_email, email_heading, findings, pr_link, smtp_url, smtp_port):
         try:
             if os.getenv("EMAIL_SENDER") is None:
                 logging.error(f"Failed to fetch email address from environment variables.")
                 return
-            content = f"Security scan completed.\n\nFindings:\n{findings}\n\nPull Request:\n {pr_link}"
+            content = f"Status: Security scan completed.\n\nFindings:\n\n{findings}Pull Request:\n {pr_link}"
             msg = MIMEText(content)
-            msg["Subject"] = "Secure Code Tool Report"
+            msg["Subject"] = "Secure Code Tool Report: "+email_heading
             msg["From"] = os.getenv("EMAIL_SENDER")
             msg["To"] = recipient_email
             logging.info("Initiating email sending.")
