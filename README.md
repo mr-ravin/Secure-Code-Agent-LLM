@@ -5,7 +5,7 @@ Secure Code Tool is a **LangChain-powered** LLM based automated code review and 
 
 ✅ Scans for **security vulnerabilities** in source code files
 
-✅ Supports **Python, JavaScript, TypeScript, Java, C, and C++** (Depends on which LLM one is using, we are using gemma3:12b)
+✅ Supports **Python, JavaScript, TypeScript, Java, C, and C++** (Depends on which LLM one is using, we are using `gemma3:12b`)
 
 ✅ Refactors code to improve quality and maintainability based on detected security issues
 
@@ -15,7 +15,7 @@ Secure Code Tool is a **LangChain-powered** LLM based automated code review and 
 
 ## Features
 - **Security Analysis**: Detects hardcoded credentials, weak cryptography, and insecure patterns.
-- **Context-Aware Code Refactoring**: Improves structure, readability, and performance while fixing security vulnerabilities using Gemma3:12b.
+- **Context-Aware Code Refactoring**: Improves structure, readability, and performance while fixing security vulnerabilities using `gemma3:12b`.
 - **AI-Powered Code Suggestions**: Uses `gemma3:12b` LLM model for intelligent security fixes and best-practice improvements.
 - **GitHub Integration**: Automatically creates a new branch and submits a PR with fixes.
 - **Email Report**: Sends findings and PR details (if enabled).
@@ -34,7 +34,7 @@ Secure Code Tool is a **LangChain-powered** LLM based automated code review and 
 ---
 #### Important: 
 
-Secure-Code-Tool-LLM utilized approximately 12GB of GPU memory and 9GB of RAM. It's Git repository was first cloned into the Lightning.ai environment, after which the Ollama server was launched with gemma3:12b model on the GPU.
+Secure-Code-Tool-LLM utilized approximately 12GB of GPU memory and 9GB of RAM. It's Git repository was first cloned into the Lightning.ai environment, after which the Ollama server was launched with `gemma3:12b` model on the GPU.
 
 In case one have better hardware resources available, can try with more powerful LLMs available on `Ollama` like: `gemma3:27b`, `llama3:8b`, `llama3:70b`, `mistral` etc. A model can be easily changed with `--ollama_model` flag in `main.py` once it is pulled on Ollama Server `ollama pull < model name:<version> >`. Or, 
 
